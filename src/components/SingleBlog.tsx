@@ -13,16 +13,18 @@ interface Blog {
 }
 
 const SingleBlog: React.FC = () => {
-  const { id } = useParams<{ id: string }>(); // Get the blog id from the URL
+  const { id } = useParams();
+  const blogId = id ? parseInt(id, 10) : null;
   const navigate = useNavigate(); // For navigation after deletion or other actions
   const blog = [
-    ...staticBlogs,
-    ...(JSON.parse(localStorage.getItem("dynamicBlogs") || "[]") as Blog[]),
-  ].find((b) => b.id === parseInt(id)); // Find the blog by id
+  ...staticBlogs.map((b) => ({ ...b, likes: 0 })), // Ensure static blogs have a default 'likes' property
+  ...(JSON.parse(localStorage.getItem("dynamicBlogs") || "[]") as Blog[]),
+].find((b) => b.id === parseInt(id || "0"));
 
-  if (!blog) {
-    return <div>Blog not found.</div>; // Handle case if blog not found
-  }
+if (!blog) {
+  return <div>Blog not found.</div>;
+}
+
 
   // Handle the like functionality
   const handleLike = () => {
