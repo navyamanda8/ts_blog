@@ -280,18 +280,19 @@ useEffect(() => {
 
                 <div className="flex justify-end space-x-4">
                   <button
-                    type="button"
-                    onClick={() => {
-                      setTitle("");
-                      setContent("");
-                      setImageData(null);
-                      setImagePreview(null);
-                      document.getElementById("fileInput")!.value = "";
-                    }}
-                    className="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded"
-                  >
-                    Clear
-                  </button>
+                  type="button"
+                  onClick={() => {
+                    setTitle("");
+                    setContent("");
+                    setImageData(null);
+                    setImagePreview(null);
+                    const fileInput = document.getElementById("fileInput") as HTMLInputElement;
+                    if (fileInput) fileInput.value = "";  // Resetting the file input's value
+                  }}
+                  className="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded"
+                >
+                  Clear
+                </button>
                   <button
                     type="submit"
                     className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
