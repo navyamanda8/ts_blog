@@ -14,7 +14,7 @@ interface Blog {
 
 const SingleBlog: React.FC = () => {
   const { id } = useParams();
-  const blogId = id ? parseInt(id, 10) : null;
+  
   const navigate = useNavigate(); // For navigation after deletion or other actions
   const blog = [
   ...staticBlogs.map((b) => ({ ...b, likes: 0 })), // Ensure static blogs have a default 'likes' property
