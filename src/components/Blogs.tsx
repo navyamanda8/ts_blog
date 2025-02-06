@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import staticBlogs from "../data/blogs.json";
-import { FaPlus, FaTrash, FaThumbsUp, FaShareAlt, FaTimes } from "react-icons/fa";
+import { FaTrash, FaThumbsUp, FaShareAlt, FaTimes } from "react-icons/fa";
 
 interface Blog {
   id: number;
