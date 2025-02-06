@@ -29,28 +29,31 @@ const Blogs: React.FC = () => {
   const [imageData, setImageData] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-  useEffect(() => {
-    const savedBlogs = JSON.parse(localStorage.getItem("dynamicBlogs") || "[]");
-    const updatedStaticBlogs = staticBlogs.map((blog: Blog) => ({
-      ...blog,
-      likes: typeof blog.likes === "number" ? blog.likes : 0,
-    }));
+useEffect(() => {
+  const savedBlogs = JSON.parse(localStorage.getItem("dynamicBlogs") || "[]");
 
-    const allBlogs = [
-      ...updatedStaticBlogs,
-      ...savedBlogs.filter(
-        (savedBlog: Blog) =>
-          !updatedStaticBlogs.some(
-            (staticBlog: Blog) => staticBlog.id === savedBlog.id
-          )
-      ),
-    ];
+  const updatedStaticBlogs = staticBlogs.map((blog: any) => ({
+    ...blog,
+    likes: typeof blog.likes === "number" ? blog.likes : 0, // Default likes to 0 if not available
+    author: blog.author || "Unknown Author", // Default author to "Unknown Author" if not available
+  }));
 
-    setBlogs(allBlogs);
+  const allBlogs = [
+    ...updatedStaticBlogs,
+    ...savedBlogs.filter(
+      (savedBlog: Blog) =>
+        !updatedStaticBlogs.some(
+          (staticBlog: Blog) => staticBlog.id === savedBlog.id
+        )
+    ),
+  ];
 
-    const savedComments = JSON.parse(localStorage.getItem("comments") || "{}");
-    setComments(savedComments);
-  }, []);
+  setBlogs(allBlogs);
+
+  const savedComments = JSON.parse(localStorage.getItem("comments") || "{}");
+  setComments(savedComments);
+}, []);
+
 
   const handleLike = (id: number) => {
     setBlogs((prevBlogs) => {
